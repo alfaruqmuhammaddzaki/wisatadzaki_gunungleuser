@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="id" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gunung Leuser — Jejak Sunyi di Ujung Sumatra</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-primary: #121f17;
+      --bg-card: #1a2e22;
+      --text-main: #f3efe6;
+      --text-muted: #b5aca0;
+      --accent-amber: #28cd1f;
+      --accent-green: #258ab8;
+      --border-color: #2b4634;
+      --hover-bg: #1f3528;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.8;
+      /* Padding atas disesuaikan agar tidak tertutup navbar */
+      padding: 0 1.5rem 3rem 1.5rem; 
+    }
+
+    /* === TAMBAHAN CSS UNTUK NAVIGASI === */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: rgba(18, 31, 23, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 3rem;
+    }
+
+    .navbar-container {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .navbar ul {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .navbar a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .navbar a:hover {
+      color: var(--accent-amber);
+    }
+    /* =================================== */
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 3rem;
+      animation: fadeInDown 1s ease-out;
+      /* Tambahan padding top untuk kompensasi scroll anchor */
+      padding-top: 2rem; 
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--accent-amber);
+      font-size: 1.15rem;
+      font-style: italic;
+      font-family: 'Playfair Display', serif;
+    }
+
+    article section {
+      margin-bottom: 3.5rem;
+      animation: fadeIn 1.2s ease-out;
+      /* Scroll margin agar saat di-klik dari navigasi tidak tertutup navbar */
+      scroll-margin-top: 6rem; 
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      margin-bottom: 1.25rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-amber);
+      border-radius: 50%;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .image-grid.two-cols {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .image-slot {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .image-slot img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease, filter 0.4s ease;
+      filter: brightness(0.85);
+    }
+
+    .image-slot:hover {
+      border-color: var(--accent-amber);
+      transform: translateY(-5px);
+    }
+
+    .image-slot:hover img {
+      transform: scale(1.05);
+      filter: brightness(1);
+    }
+
+    .image-slot .slot-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(18, 31, 23, 0.9));
+      padding: 2rem 1.5rem 1.5rem;
+      color: var(--text-main);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      z-index: 2;
+    }
+
+    .accordion-container {
+      margin-top: 2rem;
+    }
+
+    .accordion {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      cursor: pointer;
+      padding: 1.2rem 1.5rem;
+      width: 100%;
+      border: 1px solid var(--border-color);
+      text-align: left;
+      outline: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: 0.3s;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion.active, .accordion:hover {
+      background-color: var(--hover-bg);
+      border-color: var(--accent-amber);
+    }
+
+    .accordion::after {
+      content: '\002B'; 
+      color: var(--accent-amber);
+      font-size: 1.5rem;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+
+    .active::after {
+      content: "\2212";
+    }
+
+    .panel {
+      padding: 0 1.5rem;
+      background-color: transparent;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease;
+      border-left: 2px solid var(--accent-amber);
+      margin-left: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .panel ul, .panel ol {
+      color: var(--text-muted);
+      margin: 1rem 0 1rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    .panel li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* === TAMBAHAN CSS UNTUK SECTION BOOKING === */
+    .booking-wrapper {
+      background-color: var(--bg-card);
+      padding: 2.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      margin-top: 2rem;
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-card {
+      background-color: var(--bg-primary);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      transition: 0.3s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--accent-amber);
+    }
+
+    .contact-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--accent-amber);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .contact-card p {
+      margin-bottom: 0.2rem;
+      font-size: 0.95rem;
+    }
+    /* ========================================== */
+
+    footer {
+      text-align: center;
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.5rem; }
+      body { padding: 0 1rem 1.5rem 1rem; }
+      .image-grid.two-cols { grid-template-columns: 1fr; }
+      .navbar ul { gap: 1rem; justify-content: space-between; width: 100%; padding: 0 1rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Tambahan Navigasi -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <ul>
+        <li><a href="#beranda">Beranda</a></li>
+        <li><a href="#pesona">Pesona</a></li>
+        <li><a href="#persiapan">Persiapan</a></li>
+        <li><a href="#booking">Booking</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header id="beranda">
+      <h1>Gunung Leuser</h1>
+      <p class="subtitle">“Benteng sunyi di ujung Sumatra, tempat napas bumi bersemi dalam keabadian.”</p>
+    </header>
+
+    <main>
+      <article>
+        
+        <section>
+          <p>Ada magis yang sulit dijelaskan ketika kabut pagi perlahan menyingkir, menampakkan tajuk-tajuk pohon purba yang menjulang memeluk langit. Taman Nasional Gunung Leuser bukan sekadar titik di peta Sumatra, melainkan sebuah denyut nadi alam liar yang masih bernapas panjang.</p>
+          
+          <div class="image-grid">
+            <div class="image-slot">
+              <div class="slot-label">Kabut pagi memeluk lembah Leuser</div>
+              <img src="vibes.png" alt="Pemandangan Leuser" loading="lazy">
+            </div>
+          </div>
+        </section>
+
+        <!-- Tambahan ID 'pesona' -->
+        <section id="pesona">
+          <h2>Harmoni yang Tersisa</h2>
+          <p>Jarang ada tempat di bumi yang menyimpan rahasia serapat belantara ini. Inilah satu-satunya panggung alam di mana <strong>orangutan sumatra, harimau, gajah, dan badak</strong> masih sudi berbagi rute jelajah yang sama. Berjalan di sini rasanya seperti memutar waktu ke era di mana manusia hanya bertindak sebagai tamu, bukan penguasa.</p>
+
+          <div class="image-grid two-cols">
+            <div class="image-slot">
+              <div class="slot-label">Napas flora endemik</div>
+              <img src="dzaki.png" alt="Flora Leuser" loading="lazy">
+            </div>
+            <div class="image-slot">
+              <div class="slot-label">Jejak penghuni rimba</div>
+              <img src="hewan.png" alt="Fauna Leuser" loading="lazy">
+            </div>
+          </div>
+          
+          <p>Merekam lanskap ini dengan mata (atau lensa kameramu) adalah sebuah keistimewaan. Namun, keheningan di sini sangat rapuh. Butuh kesadaran penuh agar keagungan ini tak sekadar berakhir sebagai dongeng pengantar tidur di masa depan.</p>
+        </section>
+
+        <!-- Tambahan ID 'persiapan' -->
+        <section id="persiapan">
+          <h2>Bekal Sebelum Mengetuk Pintu Rimba</h2>
+          <p>Mendaki Leuser sama sekali tidak bisa diremehkan. Hutannya lebat, jalurnya panjang dan menguras napas. Butuh lebih dari sekadar keberanian untuk menapakkan kaki di sini. Berikut adalah hal esensial yang harus kamu tahu sebelum berangkat:</p>
+
+          <div class="accordion-container">
+            
+            <!-- Akordeon 1 -->
+            <button class="accordion">1. Fisik dan Peralatan yang Wajib Disiapkan</button>
+            <div class="panel">
+              <ul>
+                <li><strong>latihan fisik yang cukup:</strong> Jangan kaget dengan medannya. lari, <i>squat jump</i>, atau lompat tali dari jauh-jauh hari agar otot kakimu tidak kaget menghadapi tanjakan yang berlumpur.</li>
+                <li><strong>Gears yang tepat:</strong> Sepatu <i>trekking</i> beralas cengkeram kuat adalah nyawa. Bawa jas hujan, <i>gaiter</i> (pelindung kaki dari pacet), dan pakaian cepat kering.</li>
+                <li><strong>Amunisi dokumentasi:</strong> Bawa kamera digital atau DSLR andalanmu untuk membidik lanskap liar ini. Pastikan bawa <i>drybag</i> untuk melindunginya dari kelembapan ekstrem.</li>
+        <li><strong>Bawa Ransel dan siapkan teman-teman:</strong>Bawa ramsum makanan yang cukup,pakaian kering dan bawa sleepin bag serta tenda yang membuat nyaman dan aman</li>
+              </ul>
+            </div>
+
+            <button class="accordion">2. Pantangan & Larangan di Hutan Leuser</button>
+            <div class="panel">
+              <ul>
+                <li><strong>Dilarang keras menyampah:</strong> Bawa turun kembali semua bungkus logistikmu. Jangan tinggalkan jejak apa pun kecuali jejak sepatu.</li>
+                <li><strong>Jangan berisik:</strong> Matikan speaker bluetooth-mu. Hutan punya simfoninya sendiri. Suara keras akan membuat stres satwa liar dan merusak pengalaman pendaki lain.</li>
+                <li><strong>Jangan memprovokasi satwa:</strong> Jika berpapasan dengan satwa buas atau primata, jaga jarak aman. Jangan pernah memberi mereka makanan manusia.</li>
+              <li><strong>Hormati adat istiadat serta budaya yang ada:</strong>sebab kita hanya bertamu dan alam adalah milik tuhan dan adat yang ada</li>
+              </ul>
+            </div>
+
+          
+            <button class="accordion">3. Tata Cara Reservasi dan Perizinan</button>
+            <div class="panel">
+              <ol>
+                <li><strong>Pilih Titik Masuk:</strong> Akses paling umum adalah melalui Bukit Lawang (Sumatra Utara) atau Ketambe (Aceh).</li>
+                <li><strong>Gunakan Pemandu Resmi:</strong> Wajib menyewa <i>guide</i> atau ranger lokal yang terdaftar di Himpunan Pramuwisata Indonesia (HPI) setempat. Jangan pernah nekat masuk tanpa pemandu.</li>
+                <li><strong>SIMAKSI:</strong> Urus Surat Izin Masuk Kawasan Konservasi (SIMAKSI) melalui kantor Balai Besar TNGL. Biasanya, jika kamu menggunakan jasa pemandu atau agen <i>trekking</i> lokal, mereka sudah akan menguruskan perizinan ini untukmu sepaket dengan biaya trip.</li>
+              </ol>
+            </div>
+
+          </div>
+        </section>
+        
+        <section>
+          <div class="image-grid">
+            <div class="image-slot">
+              <div class="slot-label">Lembayung senja sebagai penutup hari</div>
+              <img src="sunset.jpg" alt="Senja di Leuser" loading="lazy">
+            </div>
+          </div>
+        </section>
+
+        <!-- TAMBAHAN: SECTION BOOKING BARU -->
+        <section id="booking">
+          <h2>Kontak & Booking</h2>
+          <p>Tertarik untuk menjelajah? Pastikan perjalananmu aman, berizin, dan didampingi pemandu lokal berlisensi. Hubungi instansi atau komunitas pemandu resmi di bawah ini untuk mengurus perizinan dan paket pendakianmu.</p>
+          
+          <div class="booking-wrapper">
+            <p><strong>Layanan Informasi Resmi:</strong></p>
+            <div class="contact-grid">
+              
+              <div class="contact-card">
+                <h3>Balai Besar TNGL</h3>
+                <p>📍 Jl. Selamat No. 137, Medan</p>
+                <p>📞 Telepon: (061) 7872919</p>
+                <p>✉️ Email: bbtngl@menlhk.go.id</p>
+                <p>🌐 Web: gunungleuser.or.id</p>
+              </div>
+
+              <div class="contact-card">
+                <h3>Pusat Informasi Ketambe</h3>
+                <p>📍 Ketambe, Aceh Tenggara</p>
+                <p>📱 WhatsApp: +62 812 3456 7890 (Contoh)</p>
+                <p>🤝 Melayani: Guide HPI, Porter, & SIMAKSI</p>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </main>
+
+    <footer>
+      <p>Dibuat dan dibentuk oleh Muhammad Dzaki Alfaruq.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const acc = document.getElementsByClassName("accordion");
+      
+      for (let i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+          for (let j = 0; j < acc.length; j++) {
+            if (acc[j] !== this && acc[j].classList.contains("active")) {
+              acc[j].classList.remove("active");
+              acc[j].nextElementSibling.style.maxHeight = null;
+              acc[j].nextElementSibling.style.padding = "0 1.5rem";
+            }
+          }
+
+          this.classList.toggle("active");
+          const panel = this.nextElementSibling;
+          
+          if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+            panel.style.padding = "0 1.5rem";
+          } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+            panel.style.padding = "1rem 1.5rem";
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
